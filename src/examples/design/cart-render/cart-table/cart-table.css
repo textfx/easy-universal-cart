@@ -1,0 +1,17 @@
+.row td {
+    padding-right: 0;
+    padding-left: 10px;
+}
+.row th {
+    padding-right: 0;
+    padding-left: 10px;
+}
+
+.modal-custom {
+    padding: 20px 10px 15px 10px;
+}
+.modal-custom > h3 {
+    font-weight: 900;
+    margin-left: 5px;
+    margin-bottom: 15px;
+}

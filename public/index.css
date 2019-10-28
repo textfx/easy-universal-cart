@@ -1,0 +1,87 @@
+/*reset*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b,
+u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table,
+caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,
+embed, figure, figcaption, footer, header, menu, nav, output, ruby, section,
+summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; outline: 0;}
+
+/* HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure, footer, header, menu, nav, section, main {display: block;}
+
+ol, ul {list-style: none;}
+blockquote, q {quotes: none;}
+img{max-width: 100%; height: auto;}
+a{text-decoration: underline;}
+a:hover{cursor: pointer;}
+
+*::-webkit-input-placeholder {color: #a9a9a9; opacity: 1;}
+*:-moz-placeholder {color: #a9a9a9; opacity: 1;}
+*::-moz-placeholder {color: #a9a9a9; opacity: 1;}
+*:-ms-input-placeholder {color: #a9a9a9; opacity: 1;}
+*{margin: 0; padding: 0;}
+*{-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+button,input{outline: none;}
+
+/* Default settings*/
+@font-face{font-family: 'fregatregular';src:url(./img/fonts/fregat.eot);src:url(./img/fonts/fregat.woff) format('woff');font-weight:400;font-style:normal}
+@font-face{font-family: 'fregatbold';src:url(./img/fonts/fregat_bold.eot);src:url(./img/fonts/fregat_bold.woff) format('woff');font-weight:700;font-style:normal}
+@font-face{font-family: 'fregatbolditalic';src:url(./img/fonts/fregat_bold_italic.eot);src:url(./img/fonts/fregat_bold_italic.woff) format('woff');font-weight:700}
+@font-face{font-family: 'fregatitalic';src:url(./img/fonts/fregat_italic.eot); src:url(./img/fonts/fregat_italic.woff) format('woff');font-weight:400}
+
+.hidden{display: none;}
+.clear{clear: both;height: 0px;}
+.invis{display: none;}
+.left{float: left;}
+.right{float: right;}
+.center{text-align: center;}
+.clearfix:after{content: '';display: block;clear: both;}
+.red {color: red;}
+
+
+/*Site settings*/
+h1,h2,h3,h4,h5,h6{font-weight: 500;}
+b, strong{font-weight: 500;}
+
+.strong{font-size:40pt; font-weight: 500;}
+
+.opacity-75{
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    -moz-opacity: 0.75;
+    -khtml-opacity: 0.75;
+    opacity: 0.75;
+}
+
+/*html {
+    font-family: 'Roboto', sans-serif;
+}*/
+
+/*html {
+    font-family: 'fregatregular', sans-serif;
+}*/
+body {
+    font-family: 'fregatregular', sans-serif;
+    font-size: 18px;
+    line-height: 1.5em;
+    background: #fff;
+    color: #333;
+    font-weight: 400;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
+.font-14 {font-size:14pt;}
+.font-16 {font-size:16pt;}
+.font-23 {font-size: 23px;}
+.font-24{font-size:24pt;}
+.font-26{font-size:26pt;}

@@ -1,0 +1,80 @@
+.btn-back {
+    position:absolute;
+    left:-5px;
+    top:-8px;
+}
+.fa-arrow-alt-circle-left {
+    font-size:32px;
+    color:#000;
+}
+.form-bank {
+    height: 20px;
+    width: 20px;
+}
+.relative {
+    position: relative;
+}
+
+
+
+
+.container-2 .order{
+    padding-top: 20px;
+}
+.container-2 .order>p.center{
+    font-weight: 500;
+}
+.container-2 .order>p.center strong{
+    text-transform: uppercase;
+    font-weight:normal;
+    display: inline-block;
+    font-size: 28px; margin-left: -10px; margin-bottom: 5px
+}
+.container-2 form{
+    position: relative;
+    width: 388px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.container-2 form>div{
+    padding-bottom: 15px;
+}
+.container-2 form input{
+    width: 90%;
+    height: 80px;
+    margin-left:15px;
+    margin-bottom: 10px;
+    position: relative;
+    border: 3px solid #f4df2a;
+    line-height: 80px;
+    text-indent: 40px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    font-size: 20px;
+}
+.container-2 form input[type=checkbox]{
+   height: 20px;
+    width: 20px;
+}
+.container-2 form input:focus{
+    border-color: #999;
+}
+
+.container-2 .checkbox{
+    postition: relative;
+    padding: 10px 0 0 5px;
+}
+.container-2 .order {
+    padding-top: 10px;
+}
+.container-2 .order>button{
+     background: #d70300;
+     width: 100%;
+     border: 0;
+}
+.container-2 .bank {
+    margin-left: 10px;
+    position: relative;
+    top: -3px;
+}

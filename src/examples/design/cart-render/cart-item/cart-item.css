@@ -1,0 +1,25 @@
+.fa-angle-left {
+    padding-right:10px;
+    font-size:24px; color:#000
+}
+
+.count{
+    position: relative;
+    top: -2px;
+    pointerEvents: "none";
+}
+
+.fa-angle-right {
+    padding-left:10px;
+    font-size:24px; color:#000
+}
+
+.row td > img {
+    width: 70px;
+    height: 105px;
+}
+.row td[class="gift"] {
+    text-align:center;
+    padding-top : 25px;
+    font-size: 32px;
+}

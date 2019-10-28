@@ -1,0 +1,9 @@
+.icon-cart { position: fixed; top: 20px; right: 20px;  background: #ff0000; color: #fff; text-decoration: none; padding: 10px 15px 5px 25px; font-size: 17px; padding-right:10px;}
+.icon-cart:hover { background: #ff0000; }
+
+.counter{
+    position: absolute;
+    left: 9px;
+    top: 16px;
+    color: #f9fffd;
+}
