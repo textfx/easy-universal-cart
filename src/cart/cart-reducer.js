@@ -1,6 +1,6 @@
 /*!
  * Easy-Universal-Cart JavaScript Library v0.9
- *
+ * https://github.com/textfx/easy-universal-cart
  *
  * Date: 2019-10-29T21:04Z
  */
@@ -50,7 +50,7 @@ export default function cartReducer(state = [],  a) {
                     ? {...item,  ...a.item}
                     : {...item}
             }));
-        case  "CART_SET_STATE": //Позволяет задавать полностью новый стейт.
+        case  "CART_SET_STATE":
             return sequence((Array.isArray(a.state)) ? a.state : state);
         default:
             return state;
