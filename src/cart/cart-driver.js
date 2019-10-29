@@ -1,59 +1,4 @@
 import React from 'react';
-import {surprise} from "../examples/simple/simple";
-
-export function cartReducer(state = [],  a) {
-
-    if (!a.state && (!a.item || a.item.id === undefined)) {
-        return state;
-    }
-
-    const findIndex = (findId) => state.findIndex(({id}) => id === findId);
-    const incDec = (inc) => {
-        return state.map((item) => {
-            let it = {...item};
-            if (!item.fixCount && it.id === a.item.id)
-                for (let [key, val] of Object.entries(a.item)) {
-                    if (key === "id") continue;
-                    it[key] =  (it[key] ? it[key] : 0) + (inc ? val : -val);
-                }
-            return it;
-        }).filter((itme)=> (itme.count > 0)); // Если count == 0 то удалять item
-    };
-    const sequence = (state) => {
-        let first = state.filter((item)=>item.position === "first");
-        let other = state.filter((item)=>item.position === undefined);
-        let last = state.filter((item)=>item.position === "last");
-        return [...first, ...other, ...last];
-    }
-    switch (a.type) {
-        case "CART_ADD":
-            return sequence((findIndex(a.item.id) >= 0)  // find index
-                ? state.map((item) => (item.id !== a.item.id) // Если уже есть товар то count+14
-                    ? {...item}
-                    : {...item, ...a.item, count:  !item.fixCount ? (item.count ? ++item.count : 2) : (a.item.count ? a.item.count : 1)})
-                : [...state, {...a.item, count: a.item.count? a.item.count : 1}]);  // иначе добавляем новый
-        case "CART_REMOVE":
-            return state.filter((item)=>item.id !== a.item.id);
-        case "CART_INC":
-            return incDec(true);
-        case "CART_DEC":
-            return incDec(false);
-        case "CART_SET":
-            // изменить содержимое указанных свойств
-            // пример {id: 1, count:  10}
-            return sequence(state.map((item) => {
-                if (!a.item || a.item.id === undefined)
-                    return item;
-                return (item.id === a.item.id)
-                    ? {...item,  ...a.item}
-                    : {...item}
-            }));
-        case  "CART_SET_STATE": //Позволяет задавать полностью новый стейт.
-            return sequence((Array.isArray(a.state)) ? a.state : state);
-        default:
-            return state;
-    }
-}
 
 //Источник истины localStore не редюсер!!! Потому возможно между вкладками данные из корзины передавать.
 export function CartDriver(store, nameLocalState = "cart") {
@@ -63,7 +8,7 @@ export function CartDriver(store, nameLocalState = "cart") {
     let _getLocal = (name, def=[]) => {
         let result =  JSON.parse(localStorage.getItem(name));
         return result ? result : def;
-    }
+    };
     let _setLocal = (name, val) => localStorage.setItem(name, JSON.stringify(val));
 
     if (nameLocalState) {
@@ -84,7 +29,7 @@ export function CartDriver(store, nameLocalState = "cart") {
         },
 
         is (id) {
-           return (this.get(id)) ? true : false;
+            return !!(this.get(id));
         },
 
         string(num, quotes = "'") {
@@ -96,9 +41,6 @@ export function CartDriver(store, nameLocalState = "cart") {
         },
 
         remove(id) {
-           /*if (Array.isArray(id))
-                id.forEach((val)=> dispatch({type: 'CART_REMOVE', item: {val}}, val === id[0]));
-            else*/
                 dispatch({type: 'CART_REMOVE', item: {id}});
         },
 
@@ -164,7 +106,7 @@ export function CartDriver(store, nameLocalState = "cart") {
                 result.push(<input key={item.id} type="hidden" name="cart[]" value={JSON.stringify(item)} />);
             });
 
-            let obj  = {..._getLocal("cart_form"), ...custom}
+            let obj  = {..._getLocal("cart_form"), ...custom};
             for (let key in obj) {
                 if (obj.hasOwnProperty(key))
                     result.push(<input key={key} type="hidden" name={key} value={obj[key]} />);
@@ -172,10 +114,6 @@ export function CartDriver(store, nameLocalState = "cart") {
 
             return result;
         },
-
-
-
-
 
 
         //Если в корзине нечего нет, нечего не сработает
@@ -201,9 +139,8 @@ export function CartDriver(store, nameLocalState = "cart") {
         getLocalState() {
             return _getLocal(nameLocalState);
         },
-        //Если выполнить во время sumit формы, то пере отправкой, мы очитим хранилище, а при возращении назад, данные подтянутся из пустого храналища
-        //что позволить избавитя от баги, полной корзины в кеше
-        //Срабатывает не во всех версиях браузера, надёжнее чистить корзину сразу this.clear()
+        //Позволяет не явно очистить коризну, после обновления страницы, она будет пуста
+        //Если выполнить во время sumit формы перед отправкой, мы очитим хранилище. Надёжнее чистить корзину сразу this.clear()
         clearLocalState() {
             _setLocal(nameLocalState, []);
         },
@@ -214,12 +151,12 @@ export function CartDriver(store, nameLocalState = "cart") {
         //к примеру price и оно посчитает суму всех полей прайс
         //item == {price:100, discount:10, id:12, name:abc}
         //key == price
-        //discount значение поумолчанию, на случай если нужно указать глобальную скудику, discount в item указанный как совойство, перекрывает глобальный
+        //discount значение поумолчанию, на случай если нужно указать глобальную скудику, discount в item указанный как совойство, перекрывает глобальный в атрибутах
         sum(key, discount, callback) {
             let sum = 0;
             (store.getState() || []).forEach((item)=>{
                 if (item[key]) {
-                    let s =  (discount != undefined)
+                    let s =  (discount !== undefined)
                         ? this.discount(item[key], item["count"], (item["discount"] ? item["discount"] : discount))
                         : item[key]; //this.discountObj(item, key, discount);
                     //Позволяет например передать roundMagic функцию сюда, и сделать число болие красивым
@@ -229,7 +166,7 @@ export function CartDriver(store, nameLocalState = "cart") {
             return sum;
         },
         sumPrice(key, discount, callback){
-            return this.setForm("cart_sum", this.sum(key, discount != undefined ? discount : 0, callback));
+            return this.setForm("cart_sum", this.sum(key, discount !== undefined ? discount : 0, callback));
         },
         //полиморф, позволяет price:{10:300,20:250,30:200} или discount:{10:10, 20:50} преобразить в однозначный int. Например количество товара 11, значит discount:10 а price:300
         //на случай когда я захочу узнать свою скидку в зависемости от количества, в рендер функции, допустим вывести крупными буквами, возле ячейки. -10%
@@ -254,13 +191,13 @@ export function CartDriver(store, nameLocalState = "cart") {
 
         discount(price, count, discount) {
             const dis = this.current(count, discount);
-            const result = count*this.current(count, price)
+            const result = count*this.current(count, price);
             return (!dis)
                 ?  result
                 : Math.floor((result/100)*(100-dis));
         },
         //Делает числа красивыми
-        //Не используйте эту функцию, если для важна каждая копейка, и наценка не большая.
+        //Не используйте эту функцию, если наценка незначительная.
         roundMagic(x, precision = 10 ) {
             let d =  Math.ceil(x/precision)*precision;
             return d !== x ? d-precision : d; //Не когда не спросит с клиента сумму больше, чем до округления
@@ -270,73 +207,33 @@ export function CartDriver(store, nameLocalState = "cart") {
         //actions add or remove inside render function
         toggle(display, name, yes, no){
             if (display) {
-                if (!cart.is(name))
+                if (!this.is(name))
                     yes();
-            } else if(cart.is(name)) {
-               no ? no(name) : cart.remove(name);
+            } else if(this.is(name)) {
+               no ? no(name) : this.remove(name);
             }
         }
     };
 }
 
-export let cart;
+export let cartInstance;
+
 export function setCart(YourClass) {
-    cart =  YourClass;
-    return cart;
+    cartInstance =  YourClass;
+    return cartInstance;
 }
 export function Cart(store, YourClass) {
-    cart =  (YourClass) ? new YourClass(store) : new CartDriver(store);
-    return cart;
+    cartInstance =  (YourClass) ? new YourClass(store) : new CartDriver(store);
+    return cartInstance;
 }
 
 export function useCart() {
-    return cart;
+    return cartInstance;
 }
 export function withCart(Component) {
-   return (props)=> <Component cart={cart} {...props} />;
+   return (props)=> <Component cart={cartInstance} {...props} />;
 }
 
 
-/*function deleteCat(id){
-    store.dispatch({
-        type: 'CART_REMOVE',
-        item: {id}
-    });
-}*/
 
-
-
-
-/*store.dispatch({
-    type: 'CART_ADD',
-    item: {name: "tovar1", id:1, price:1234, valuta:"grn"}
-});
-store.dispatch({
-    type: 'CART_ADD',
-    item: {name: "tovar2", id:2, price:1234, valuta:"grn"}
-});
-store.dispatch({
-    type: 'CART_ADD',
-    item: {name: "tovar12", id:12, price:1234, valuta:"grn"}
-});
-store.dispatch({
-    type: 'CART_SET',
-    item: {name: "igor", id:1, price:1234, count:15, valuta:"grn"}
-});
-store.dispatch({
-    type: 'CART_ADD',
-    item: {name: "tovarINC", id:13, price:1234, valuta:"grn"}
-});
-store.dispatch({
-    type: 'CART_REMOVE',
-    item: {id:2}
-});
-store.dispatch({
-    type: 'CART_INC',
-    item: {id:13, count:5}
-});
-store.dispatch({
-    type: 'CART_DEC',
-    item: {id:13, count:2}
-});*/
 

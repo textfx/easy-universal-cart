@@ -1,6 +1,6 @@
-import React, {useState,useRef,useEffect} from 'react';
+import React, {useState,useRef} from 'react';
 import {connect} from 'react-redux';
-import {withCart} from '../../../cart/cart'
+import {withCart} from '../../../cart/cart-driver'
 import CartOrder from './cart-order';
 import './cart-render.css';
 import Modal from './../modal/modal'
@@ -27,7 +27,7 @@ function CartRender({state, cart, open, setOpen}) {
             setError(true);
         } else
             setTable(false);
-    }
+    };
 
 
     const openCart  = ()=>{
@@ -52,10 +52,10 @@ function CartRender({state, cart, open, setOpen}) {
                  {/*Если перерисовывать каждый раз, то потрётся Имя Фамилия при закрытии окна, потому регулируем видимость.*/}
                  <CartOrder onBack={setTable} display={!tabel}/>
              </Modal>
-             <a onClick={()=> window.scrollTo(0, 0)}>TOP</a>
+
              {/*Icon Cart*/}
              {state.length
-                 ? (<a className="icon-cart" onClick={openCart}>
+                 ? (<a href="#!" className="icon-cart" onClick={openCart}>
                       <span className="counter">{state.length}</span>
                       <i className="fas fa-cart-arrow-down font-26"></i>
                    </a>)

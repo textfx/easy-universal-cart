@@ -1,5 +1,5 @@
 import React from 'react';
-import {withCart} from '../../../../cart/cart'
+import {withCart} from '../../../../cart/cart-driver'
 import './cart-order.css'
 
 function CartOrder({onBack, cart, display=false}) {
@@ -7,7 +7,7 @@ function CartOrder({onBack, cart, display=false}) {
         <div className="noselect" style={{display : display? "contents" : "none"}}>
         <div className="container-2 noselect">
 
-            <a onClick={()=>onBack(true)} className="btn-back">
+            <a href="#!" onClick={()=>onBack(true)} className="btn-back">
                 <i className="fas fa-arrow-alt-circle-left"></i>
             </a>
 
@@ -17,7 +17,7 @@ function CartOrder({onBack, cart, display=false}) {
                     And we will contact you to find out the details
                 </p>
 
-                <form onSubmit={(e)=>{cart.submitClear()}} style={{paddingTop: "15px"}} action="http://pars.ru/js2019/react/easy-universal-cart/public/server.php" method="post">
+                <form onSubmit={()=>{cart.submitClear()}} style={{paddingTop: "15px"}} action="https://euc-testpost.000webhostapp.com/server.php" method="post">
                     {cart.getInput()}
                     <input type="hidden" name="relead" value=" " />
                     <input type="text" name="name"  placeholder="Full name" required="" />

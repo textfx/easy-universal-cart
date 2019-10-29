@@ -25,6 +25,6 @@ export default function CartTable({state, error, sum, onNext}){
             </tbody>
         </table>
 
-        {state.length ? <div className="center"><a className="button-orange" onClick={onNext}  style={{"background": "#d70300", width:"100%"}}>Proceed to checkout</a></div> : null}
+        {state.length ? <div className="center"><a href="#!" className="button-orange" onClick={onNext}  style={{"background": "#d70300", width:"100%"}}>Proceed to checkout</a></div> : null}
     </div>);
 }

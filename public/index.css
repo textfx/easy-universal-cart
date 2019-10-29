@@ -32,7 +32,7 @@ button,input{outline: none;}
 @font-face{font-family: 'fregatitalic';src:url(./img/fonts/fregat_italic.eot); src:url(./img/fonts/fregat_italic.woff) format('woff');font-weight:400}
 
 .hidden{display: none;}
-.clear{clear: both;height: 0px;}
+.clear{clear: both;height: 0;}
 .invis{display: none;}
 .left{float: left;}
 .right{float: right;}
@@ -51,7 +51,6 @@ b, strong{font-weight: 500;}
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
     filter: alpha(opacity=75);
     -moz-opacity: 0.75;
-    -khtml-opacity: 0.75;
     opacity: 0.75;
 }
 

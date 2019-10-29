@@ -1,11 +1,11 @@
 import React from 'react';
-import {withCart} from '../../../../cart/cart';
+import {withCart} from '../../../../cart/cart-driver';
 import "./cart-item.css";
 import {surprise} from "../../../simple/simple";
 
 
 function CartItem(props){
-    const {id, img, name, size, price, count, currentSize, currentGift, cart,  currency = "UAH"} = props;
+    const {id, img, name, size, price, count, currentSize, cart,  currency = "UAH"} = props;
     const gift = id === "gift";
     let select;
 
@@ -24,20 +24,20 @@ function CartItem(props){
           remove = ()=>cart.remove(id),
           item = (<>
                 <td>
-                    <a onClick={dec}><i className="fa fa-angle-left"></i></a>
+                    <a href="#!" onClick={dec}><i className="fa fa-angle-left"></i></a>
                     <span className="count" >{count}</span>
-                    <a onClick={inc}><i className="fa fa-angle-right"></i></a>
+                    <a href="#!" onClick={inc}><i className="fa fa-angle-right"></i></a>
                 </td>
                 <td>{cart.discount(price, count, null)} <br /> {currency}</td>
                 <td>
-                    <a onClick={remove}><i className="fa fa-trash red font-24"></i></a>
+                    <a href="#!" onClick={remove}><i className="fa fa-trash red font-24"></i></a>
                 </td>
             </>);
 
     return (
         <tr>
             <td>{gift ? null : id}</td>
-            <td><img src={img}/></td>
+            <td><img src={img} alt=""/></td>
             <td>{select}</td>
             {!gift
                 ? item

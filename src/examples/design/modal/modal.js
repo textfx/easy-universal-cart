@@ -9,7 +9,7 @@ export default function Modal({isOpen, children, close, onRef}) {
     return (<div className="blocker" ref={onRef} style={{visibility : isOpen ? "visible" : "hidden"}}>
             <div className="modal" style={{display: "inline-block"}}>
                 {children}
-                {close ? <a onClick={close} className="close-modal ">Close</a> : null}
+                {close ? <a href="#!" onClick={close} className="close-modal ">Close</a> : null}
             </div>
         </div>);
 }

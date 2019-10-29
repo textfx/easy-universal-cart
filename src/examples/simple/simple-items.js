@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withCart} from '../../cart/cart'
+import {withCart} from '../../cart/cart-driver'
 import {surprise} from "./simple";
 
 function SimpleItems({state, cart, sum}) {
@@ -8,13 +8,13 @@ function SimpleItems({state, cart, sum}) {
     cart.toggle((sum>3000||state.length>(!cart.is("gift") ? 2 : 3)), "gift", ()=>surprise('cap'));
 
     return state.map((props) => {
-        const {id, qid, img, size, price, count, gift, fixCount,  currentSize, discount, magic} = props;       //props === cart.add({id:1, img:..., size:"x"})
+        const {id, img, size, price, count, gift, fixCount,  currentSize, discount, magic} = props;       //props === cart.add({id:1, img:..., size:"x"})
 
         //Уведомление о скидке на позицию товара
         let oldPrice, disProcent, saving, dis = cart.current(count, discount);
         if (dis) {
             oldPrice    = <span className='strikethrough'>{cart.discount(price, count)}</span>;
-            disProcent  = <spna style={{"color": "red"}}>-{dis}%</spna>;
+            disProcent  = <span style={{"color": "red"}}>-{dis}%</span>;
             saving      = <span><span style={{"fontWeight": "bold"}}>You save:</span> {cart.saving(price, count, discount)} UAH.</span>
         }
 
