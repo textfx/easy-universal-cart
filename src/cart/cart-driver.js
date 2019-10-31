@@ -1,5 +1,10 @@
 import React from 'react';
-
+/*!
+ * Easy-Universal-Cart JavaScript Library v1.0
+ * https://github.com/textfx/easy-universal-cart
+ *
+ * Date: 2019-10-31T23:38Z
+ */
 //Источник истины localStore не редюсер!!! Потому возможно между вкладками данные из корзины передавать.
 export function CartDriver(store, nameLocalState = "cart", nameFormVariable = "cart_form") {
     let result = [], submitClear = false, cartApp = nameLocalState;
@@ -85,8 +90,7 @@ export function CartDriver(store, nameLocalState = "cart", nameFormVariable = "c
         },
         removeForm(name){
             let cart =_getLocal(nameFormVariable);
-            console.log(delete cart[name]);
-            //delete cart[name];
+            delete cart[name];
             _setLocal(nameFormVariable, cart);
         },
         clearForm(){
@@ -123,9 +127,8 @@ export function CartDriver(store, nameLocalState = "cart", nameFormVariable = "c
 
 
         //Если в корзине нечего нет, нечего не сработает
-        //cart_over данные которые генерируются в рендер функции, можно записать в локак стор, для кадого товара, и они гарантированно будут отправлены на сервер
-        //сюда автоматически пишется скидка по ячейке товара {"price_discount": 760} //перетирает только указанное свойство, или добавляет новое
-        //на самом деле задаёт только перечисленные свойства обьекта, а не объект в целом. set для простоты запоминания. setForm setLocal однотипно, addLocal путал бы всё
+        //данные которые генерируются в рендер функции, можно записать в локак стор, для кадого товара, и они гарантированно будут отправлены на сервер
+        //отставание будет всегда на один рендер
         setLocal(id, obj) {
             if (!obj || id === undefined) return;
             _setLocal(cartApp, (_getLocal(cartApp) || []).map((item)=> item.id === id ? {...item, ...obj} : item));

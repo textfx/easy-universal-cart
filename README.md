@@ -2,7 +2,7 @@
 ![Image alt](https://github.com/textfx/easy-universal-cart/blob/master/public/logo.gif)
 
 Easy Universal Cart allows to create the unique cart design for the variety of landing pages in a fast way.\
-But you can use it to create shops like amazon :) 
+But you can use it to create shops like Amazon :) 
 
 All you need to do is to create the design, everything else will be done for you by Easy Universal Cart.
 
@@ -29,7 +29,7 @@ const state = [
 | id        | required | ID of goods  |```{id:1} or {id:"string_id"}``` |
 | count    | 1  |Quantity of goods | ```{id:1} === {id:1, count:1}```<br>  ```{id:1, count:5} //default value is 5```<br>```{id:1, count:8} //default value is 8```|
 | fixCount | false  | It freezes count property <br>| ```{id:1, count:3, fixCount:true}``` // all the time count === 3|
-| position | undefined | Fix item's position in the cart |```{id:1, position:"first"} // always at the first position```<br>  ```{id:1, position:"last"}  // always at the last position```<br> |
+| position | undefined | Fixes item's position in the cart |```{id:1, position:"first"} // always at the first position```<br>  ```{id:1, position:"last"}  // always at the last position```<br> |
 
 - You must always set the property of ID 
 - You can set any users property like:
@@ -144,6 +144,11 @@ Methods which calculate price, total, discount.
 | toggle(display, id, yes, no) | Helps to remove or add a gift to the cart if ```display``` is ```true``` during the rendering  |```cart.toggle(sum>3000, "gift", ()=>cart.add({id:"gift"}), ()=>cart.remove({id:"gift"}))``` |
 | string(num, quotes = "'")| Wraps specified number in quotes, just in case. |```string(10)```<br> ```Result: '10'; ``` |
 
+### Install
+```console
+npm install
+npm start
+```
 
 ## Getting Started with Cart
 

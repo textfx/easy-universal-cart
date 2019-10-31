@@ -7,7 +7,7 @@ export default function CartTable({state, error, sum, onNext}){
     return (<div className="noselect modal-custom row">
         <h3>{error
             ? <span className="red">ERROR: Choose a size  </span>
-            : <span>TOTAL: {sum} грн.</span>
+            : <span>TOTAL: {sum} UAH.</span>
         }</h3>
         <table className="table font-16">
             <thead>

@@ -1,8 +1,8 @@
 /*!
- * Easy-Universal-Cart JavaScript Library v0.9
+ * Easy-Universal-Cart JavaScript Library v1.0
  * https://github.com/textfx/easy-universal-cart
  *
- * Date: 2019-10-29T21:04Z
+ * Date: 2019-10-31T23:38Z
  */
 export default function cartReducer(state = [],  a) {
     if (!a.state && (!a.item || a.item.id === undefined)) {
