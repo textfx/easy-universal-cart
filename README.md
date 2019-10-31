@@ -1,9 +1,11 @@
+## Easy Universal Cart 
+![Image alt](https://github.com/textfx/easy-universal-cart/blob/master/public/logo.gif)
+
 Easy Universal Cart allows to create the unique cart design for the variety of landing pages in a fast way.\
 But you can use it to create shops like amazon :) 
 
 All you need to do is to create the design, everything else will be done for you by Easy Universal Cart.
 
-![Image alt](https://github.com/textfx/easy-universal-cart/blob/master/public/logo.gif)
 
 ## Functions
 - Checkout for the order on a separate page 
@@ -45,7 +47,7 @@ const state = [
 |CART_SET| Replaces properties of the item | ``` { type: 'CART_SET', item: {id:1, name: "new Name",  price:"new Price"}}``` |
 |CART_SET_STATE| Replaces ```state``` with a new array [{},{},{}] | ``` { type: 'CART_SET_STATE', state: [{id:1},{id:2},{id:3}]}``` |
 
-##### How to use?
+#### How to use?
 ```javascript
 import { createStore } from 'redux';
 import cartReducer from '../cart/cart-reducer';
