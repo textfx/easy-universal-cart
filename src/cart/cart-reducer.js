@@ -19,7 +19,7 @@ export default function cartReducer(state = [],  a) {
                     it[key] =  (it[key] ? it[key] : 0) + (inc ? val : -val);
                 }
             return it;
-        }).filter((itme)=> (itme.count > 0)); // Если count == 0 то удалять item
+        }).filter((itme)=> (itme.count > 0)); // Если count <= 0 то удалять item
     };
     const sequence = (state) => {
         let first = state.filter((item)=>item.position === "first");
@@ -59,10 +59,7 @@ export default function cartReducer(state = [],  a) {
 
 
 /* Examples
-store.dispatch({
-    type: 'CART_ADD',
-    item: {name: "tovar1", id:1, price:1234, valuta:"grn"}
-});
+store.dispatch({ type: 'CART_ADD', item: {id:1, name: "potato",  price:1234, valuta:"UAH"}});
 store.dispatch({
     type: 'CART_ADD',
     item: {name: "tovar2", id:2, price:1234, valuta:"grn"}

@@ -11,16 +11,16 @@ function SimpleItems({state, cart, sum}) {
         const {id, img, size, price, count, gift, fixCount,  currentSize, discount, magic} = props;       //props === cart.add({id:1, img:..., size:"x"})
 
         //Уведомление о скидке на позицию товара
-        let oldPrice, disProcent, saving, dis = cart.current(count, discount);
+        let oldPrice, disProcent, save, dis = cart.current(count, discount);
         if (dis) {
             oldPrice    = <span className='strikethrough'>{cart.discount(price, count)}</span>;
             disProcent  = <span style={{"color": "red"}}>-{dis}%</span>;
-            saving      = <span><span style={{"fontWeight": "bold"}}>You save:</span> {cart.saving(price, count, discount)} UAH.</span>
+            save      = <span><span style={{"fontWeight": "bold"}}>You save:</span> {cart.save(price, count, discount)} UAH.</span>
         }
 
         //Save price with discount
         cart.setLocal(id, {price_discount: cart.discount(price, count, discount)});
-        const itmePrice = <>{magic} {oldPrice} { gift ? <span style={{color:"red"}}>FREE</span> : cart.discount(price, count, discount)+" UAH."} {disProcent} {saving}</>;
+        const itmePrice = <>{magic} {oldPrice} { gift ? <span style={{color:"red"}}>FREE</span> : cart.discount(price, count, discount)+" UAH."} {disProcent} {save}</>;
 
         return (
             <tr key={id}>

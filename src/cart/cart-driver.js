@@ -1,7 +1,7 @@
 import React from 'react';
 
 //Источник истины localStore не редюсер!!! Потому возможно между вкладками данные из корзины передавать.
-export function CartDriver(store, nameLocalState = "cart") {
+export function CartDriver(store, nameLocalState = "cart", nameFormVariable = "cart_form") {
     let result = [], submitClear = false, cartApp = nameLocalState;
 
     //для удобства работы с localStorage
@@ -66,7 +66,7 @@ export function CartDriver(store, nameLocalState = "cart") {
             submitClear = false;
             store.dispatch({type: 'CART_SET_STATE', state:_getLocal(nameLocalState)});
         },
-        //Позволяет не только очистить стейт, но и получить последнее состояние
+        //Позволяет очистить стейт
         clear() {
             store.dispatch((dispatch)=>dispatch({type: 'CART_SET_STATE', state:[]}));
         },
@@ -75,19 +75,22 @@ export function CartDriver(store, nameLocalState = "cart") {
 
         //FORMS
         getForm(name) {
-            let cart = _getLocal("cart_form");
+            let cart = _getLocal(nameFormVariable);
             return (cart) ? cart[name]: "";
         },
         //Добавить из рендер функции какое то значение, free_delivery:true например всё буедт добавленно на сервер
         setForm(name, value){
-            _setLocal("cart_form", {..._getLocal("cart_form"), [name]:value});
+            _setLocal(nameFormVariable, {..._getLocal(nameFormVariable), [name]:value});
             return value;
         },
         removeForm(name){
-            let cart =_getLocal("cart_form");
+            let cart =_getLocal(nameFormVariable);
             console.log(delete cart[name]);
             //delete cart[name];
-            _setLocal("cart_form", cart);
+            _setLocal(nameFormVariable, cart);
+        },
+        clearForm(){
+            _setLocal(nameFormVariable, []);
         },
         //два метода помогающих решить проблему с кешированием результатов
         submitClearIs() {
@@ -106,13 +109,16 @@ export function CartDriver(store, nameLocalState = "cart") {
                 result.push(<input key={item.id} type="hidden" name="cart[]" value={JSON.stringify(item)} />);
             });
 
-            let obj  = {..._getLocal("cart_form"), ...custom};
+            let obj  = {..._getLocal(nameFormVariable), ...custom};
             for (let key in obj) {
                 if (obj.hasOwnProperty(key))
                     result.push(<input key={key} type="hidden" name={key} value={obj[key]} />);
             }
 
             return result;
+        },
+        getAjax(custom) {
+            return {cart:_getLocal(nameLocalState), ..._getLocal(nameFormVariable), ...custom};
         },
 
 
@@ -184,8 +190,8 @@ export function CartDriver(store, nameLocalState = "cart") {
                 return 0;
         },
 
-        //экономия, разница цены без скидки и со скидкой. Функция для удобства
-        saving(price, count, discount) {
+        //экономия, разница цены без скидки и со скидкой.
+        save(price, count, discount) {
             return  this.discount(price, count) - this.discount(price, count, discount)
         },
 
@@ -205,12 +211,12 @@ export function CartDriver(store, nameLocalState = "cart") {
 
 
         //actions add or remove inside render function
-        toggle(display, name, yes, no){
+        toggle(display, id, yes, no){
             if (display) {
-                if (!this.is(name))
+                if (!this.is(id))
                     yes();
-            } else if(this.is(name)) {
-               no ? no(name) : this.remove(name);
+            } else if(this.is(id)) {
+               no ? no(id) : this.remove(id);
             }
         }
     };
