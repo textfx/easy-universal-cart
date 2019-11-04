@@ -5,7 +5,7 @@ import {surprise} from "../../../simple/simple";
 
 
 function CartItem(props){
-    const {id, img, name, size, price, count, currentSize, cart,  currency = "UAH"} = props;
+    const {id, img, name, size, price, discount, count, currentSize, cart,  currency = "UAH"} = props;
     const gift = id === "gift";
     let select;
 
@@ -28,7 +28,7 @@ function CartItem(props){
                     <span className="count" >{count}</span>
                     <a href="#!" onClick={inc}><i className="fa fa-angle-right"></i></a>
                 </td>
-                <td>{cart.discount(price, count, null)} <br /> {currency}</td>
+                <td>{cart.discount(price, count, discount)} <br /> {currency}</td>
                 <td>
                     <a href="#!" onClick={remove}><i className="fa fa-trash red font-24"></i></a>
                 </td>

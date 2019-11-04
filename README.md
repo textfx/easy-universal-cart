@@ -144,7 +144,7 @@ Methods which calculate price, total, discount.
 | toggle(display, id, yes, no) | Helps to remove or add a gift to the cart if ```display``` is ```true``` during the rendering  |```cart.toggle(sum>3000, "gift", ()=>cart.add({id:"gift"}), ()=>cart.remove({id:"gift"}))``` |
 | string(num, quotes = "'")| Wraps specified number in quotes, just in case. |```string(10)```<br> ```Result: '10'; ``` |
 
-### Install
+## Install
 ```console
 npm install
 npm start
@@ -152,7 +152,9 @@ npm start
 
 ## Getting Started with Cart
 
-Warning! CartDriver depends on ```thunk``` middleware. Let's create 2 files;
+Let's create 2 files.
+
+**Warning!** CartDriver depends on ```thunk``` middleware.
 
 ### index.js
 
