@@ -2,7 +2,7 @@ import React from 'react';
 import {withCart} from '../../../../cart/cart-driver'
 import './cart-order.css'
 
-function CartOrder({onBack, cart, display=false}) {
+const CartOrder = React.memo(({onBack, cart:{submitClear, getInput}, display=false}) => {
     return(
         <div className="noselect" style={{display : display? "contents" : "none"}}>
         <div className="container-2 noselect">
@@ -17,8 +17,8 @@ function CartOrder({onBack, cart, display=false}) {
                     And we will contact you to find out the details
                 </p>
 
-                <form onSubmit={()=>{cart.submitClear()}} style={{paddingTop: "15px"}} action="https://euc-testpost.000webhostapp.com/server.php" method="post">
-                    {cart.getInput()}
+                <form onSubmit={()=>{submitClear();}} style={{paddingTop: "15px"}} action="https://euc-testpost.000webhostapp.com/server.php" method="post">
+                    {getInput()}
                     <input type="hidden" name="relead" value=" " />
                     <input type="text" name="name"  placeholder="Full name" required="" />
                     <input type="text" name="phone" placeholder="Phone +38(095)-111-11-11" required=""/>
@@ -37,6 +37,6 @@ function CartOrder({onBack, cart, display=false}) {
         </div>
         </div>
     );
-}
-
+});
+CartOrder.whyDidYouRender = true;
 export default withCart(CartOrder);

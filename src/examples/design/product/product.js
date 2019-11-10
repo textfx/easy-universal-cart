@@ -1,13 +1,12 @@
 import React from 'react';
-import {withCart} from '../../../cart/cart-driver'
-import {connect} from 'react-redux';
+import {useCart} from '../../../cart/cart-driver'
 import './product.css';
 
-//images/catalog/HQ555_1.jpg
-function Product({setOpen,cart, id, img, beforePrice, afterPrice, size,  currency = "UAH"}) {
+const Product = React.memo(({setOpen, id, img, beforePrice, afterPrice, size,  currency = "UAH"}) => {
+    const {add} = useCart();
 
     const buyNow = ()=> {
-        cart.add({id, img,  size, price:afterPrice});
+        add({id, img,  size, price:afterPrice});
         setOpen(true);
     };
 
@@ -23,6 +22,10 @@ function Product({setOpen,cart, id, img, beforePrice, afterPrice, size,  currenc
             <div className="clear"></div>
         </div>
     );
-}
+});
+Product.whyDidYouRender = true;
+export default Product;
 
-export default withCart(connect((state)=>({state}))(Product));
+
+//export default withCart(Product);
+//export default withCart(connect((state)=>state)(Product));

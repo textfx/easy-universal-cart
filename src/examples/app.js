@@ -14,12 +14,9 @@ import cartReducer from '../cart/cart-reducer';
 import {Cart} from '../cart/cart-driver';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-
-
-const store = createStore(cartReducer, JSON.parse(localStorage.getItem('cart')), composeWithDevTools(applyMiddleware(thunk)));
+/*JSON.parse(localStorage.getItem('cart')), */
+const store = createStore(cartReducer, composeWithDevTools(applyMiddleware(thunk)));
 Cart(store);
-
-
 
 export default function App() {
     return (

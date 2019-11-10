@@ -15,7 +15,7 @@ function SimpleItems({state, cart, sum}) {
         if (dis) {
             oldPrice    = <span className='strikethrough'>{cart.discount(price, count)}</span>;
             disProcent  = <span style={{"color": "red"}}>-{dis}%</span>;
-            save      = <span><span style={{"fontWeight": "bold"}}>You save:</span> {cart.save(price, count, discount)} UAH.</span>
+            save        = <span><span style={{"fontWeight": "bold"}}>You save:</span> {cart.save(price, count, discount)} UAH.</span>
         }
 
         //Save price with discount
@@ -32,10 +32,10 @@ function SimpleItems({state, cart, sum}) {
                               </select>
                             : null}
                 </td>
-                <td>
+                <td> {/*fixCount можно делать двумя способами*/}
                     <button  type="button"  disabled={fixCount} onClick={()=>cart.dec({id:id, count:1})}>-</button>
                         {count}
-                    <button  type="button"  disabled={fixCount} onClick={()=>cart.inc({id:id, count:1})}>+</button>
+                    <button  type="button"  onClick={()=>cart.inc({id:id, count:1}, fixCount)}>+</button>
                 </td>
                 <td style={{width:"55%"}}>{itmePrice}</td>
                 <td>{(!gift) ? <a href="#!"  onClick={()=>cart.remove(id)}>Remove</a> : null}</td>
@@ -44,5 +44,5 @@ function SimpleItems({state, cart, sum}) {
     });
 }
 
-const mapStoreToProps = (state)=>({state});
+const mapStoreToProps = (state)=> ({state});
 export default connect(mapStoreToProps)(withCart(SimpleItems));

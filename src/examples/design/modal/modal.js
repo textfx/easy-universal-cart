@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import './modal.css';
+
 export default function Modal({isOpen, children, close, onRef}) {
 
     useEffect(() => {

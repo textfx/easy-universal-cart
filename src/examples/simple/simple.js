@@ -13,23 +13,21 @@ function getRandom(min, max) {
 export function surprise(id) {
     switch (id) {
         case "cap":
-            cartInstance.add({id:"gift", uid:1111, name:"cap", img:"./img/gifts/1.jpg", count:1, fixCount:true, gift:true, position:"last",  price:0,  discount:{5:50, 10:90}, valuta:"grn"});
+            cartInstance.set({id:"gift", uid:1111, name:"cap", img:"./img/gifts/1.jpg", count:1, fixCount:true, gift:true, position:"last",  price:0});
             break;
         case "gaiters":
-            cartInstance.add({id:"gift", uid:2222, name:"gaiters", img:"./img/gifts/2.jpg", count:1, fixCount:true, gift:true, position:"first", price:0,  discount:{5:50, 10:90}, valuta:"grn"});
+            cartInstance.set({id:"gift", uid:2222, name:"gaiters", img:"./img/gifts/2.jpg", count:1, fixCount:true, gift:true, position:"first", price:0});
             break;
         case "gloves":
-            cartInstance.add({id:"gift",  uid:3333, name:"gloves", img:"./img/gifts/3.jpg", count:1, fixCount:true, gift:true, position:"last",  price:0,  discount:{5:50, 10:90}, valuta:"grn"});
+            cartInstance.set({id:"gift",  uid:3333, name:"gloves", img:"./img/gifts/3.jpg", count:1, fixCount:true, gift:true, position:"last",  price:0});
             break;
         default:
             return;
     }
-
 }
 
-
+/*ГРУБЫЙ ПРИМЕР, цель демонстрация методов корзины*/
 function Simple({cart}) {
-    // price:cart.roundMagic(cart.discount(853.5, 1, 10)), disсount:{1:10, 5:50}  price  это настоящая цена
     const addDiscount = ()=>cart.add({id:getRandom(1,19), img:"./img/catalog/"+getRandom(1,19)+".jpg", size:["xs","m","l"], currentSize:"xs",  price:{1:853.5, 5:500},  discount:{5:50, 10:90}, valuta:"grn"});
     const addMagic = ()=>cart.add({id:getRandom(1,19), img:"./img/catalog/"+getRandom(1,19)+".jpg", size:["xs","m","l"], currentSize:"xs", magic:"Magic", price:cart.roundMagic(853.5), discount:{5:50, 10:90}, valuta:"grn"});
 
@@ -38,7 +36,7 @@ function Simple({cart}) {
 
     return(
         <div className="simple noselect">
-            <Link to="./?page=design" style={{"color":"red"}}>Switch to DESIGN>>></Link><br /><br />
+            <Link to="./?page=design" style={{"color":"red"}}>Switch to DESIGN>>></Link>     <Link to="./readme">Example 0</Link><br /><br />
 
             {/* MENU */}
             <a href="#!" onClick={addDiscount}>add-853.5-(discount)</a>

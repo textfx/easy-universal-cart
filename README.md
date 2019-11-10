@@ -17,8 +17,8 @@ All you need to do is to create the design, everything else will be done for you
 # Core of Cart (file cart-reducer.js)
 ```javascript 
 const state = [
-                {count, fixCount, position, ...someСustomProperties},
-                {count, fixCount, position, ...someСustomProperties},
+                {count, position, ...someСustomProperties},
+                {count, position, ...someСustomProperties},
               ];
 ```
 
@@ -28,7 +28,6 @@ const state = [
 | ------------- | ----------------------- | ----------------------- | ----------------------- |
 | id        | required | ID of goods  |```{id:1} or {id:"string_id"}``` |
 | count    | 1  |Quantity of goods | ```{id:1} === {id:1, count:1}```<br>  ```{id:1, count:5} //default value is 5```<br>```{id:1, count:8} //default value is 8```|
-| fixCount | false  | It freezes count property <br>| ```{id:1, count:3, fixCount:true}``` // all the time count === 3|
 | position | undefined | Fixes item's position in the cart |```{id:1, position:"first"} // always at the first position```<br>  ```{id:1, position:"last"}  // always at the last position```<br> |
 
 - You must always set the property of ID 
@@ -103,7 +102,7 @@ Creates action like CART_ADD or CART_REMOVE and dispatches to the store.
 | Method      | Purpose                    | How to use?                     |
 | ------------------------- | ----------------------- | ----------------------- |
 | getInput(custom) | Returns the array of inputs like:<br /> ```<input type="text" name="cart[]" vale="{id:1, price:800...}">``` <br /> It is needed to send the cart contents to the server with the help of the standard tag ```<form>``` in html.  |```<form>{cart.getInput()}</form>```<br/>```<form>{cart.getInput({"onlinePay":true, "myProperty2":"text"})}</form>```<br> **Note:** To call after the cart rendering, or using the last method during the rendering for the data to be relevant.|
-| getAjax(custom)       | Returns all the data like ```getInput```, but in the form of object: <br> ```{cart:"cart contents", ..."All the variable set with the help of setForm", ...custom}``` |```cart.getAjax();```<br>It's recommended to call ```cart.clear()``` after sending data of ```getAjax()``` |
+| getAjax(custom)       | Returns all the data like ```getInput```, but in the form of object: <br> ```{cart:"cart contents+getLocal()", ..."All the variable set with the help of setForm", ...custom}``` |```cart.getAjax();```<br>It's recommended to call ```cart.clear()``` after sending data of ```getAjax()``` |
 | setForm(name, value)  | Sets the variable which also should be sent to the server with the cart contents. |```cart.setForm("onlinePay", true)``` |
 | getForm(name)     | Gets the current variable value |```cart.getForm("onlinePay") === true``` |
 | removeForm(name)    | Removes the variable |```cart.removeForm("onlinePay")``` |
@@ -118,9 +117,9 @@ It is useful when you want to add some property to the item in the cart like ```
 
 | Method      | Purpose                    | How to use?                     |
 | ------------------------- | ----------------------- | ----------------------- |
-| setLocal(id, item)       | Adds property to the item in the cart with specified ID |Let's just say that the cart has the item with a value:<br/>```{id:1, price:200}```<br>You call: <br> ```cart.setLocal(1, {priceWithDiscount:180})``` <br/> ```Result: {id:1, price:200, priceWithDiscount:180}``` |
-| getLocal(id, name)       | Returns the property of the item with the specified name  |```getLocal(1, "priceWithDiscount") === 180```|
-| removeLocal(id, name)    | Removes the specified property of the item<br>**Note:** Don't remove properties which were not added  with the help of ```setLocal```! |```getLocal(1, "priceWithDiscount")```<br />```Result: {id:1, price:200}```|
+| setLocal(id, item)       | Adds property to the item in the cart with specified ID |Let's just say that the cart has the item with a value:<br/>```{id:1, price:200}```<br>You call: <br> ```cart.setLocal(1, {priceWithDiscount:180})``` <br/> Result on server-side: ``` {id:1, price:200, priceWithDiscount:180}``` |
+| getLocal(id, name)       | Returns the property of the item with the specified name  |```cart.getLocal(1, "priceWithDiscount") === 180```<br/>```getLocal(1) === {id:1, priceWithDiscount:180}```|
+| removeLocal(id, name)    | Removes the specified property of the item |```cart.removeLocal(1, "priceWithDiscount")```<br />Result on server-side:``` {id:1, price:200}```|
 | getLocalState()    | Returns the latest content of the cart |```cart.getLocalState()```|
 | clearLocalState()    | Clears the source of truth(LocalStorage). |```cart.clearLocalState() ```|
 
@@ -170,7 +169,7 @@ import {Cart, setCart} from './cart/cart-driver';
 import MyFirstRender from './my-first-render'
 
 
-const store = createStore(cartReducer, JSON.parse(localStorage.getItem('cart')), applyMiddleware(thunk));
+const store = createStore(cartReducer, applyMiddleware(thunk));
 const cart = Cart(store);  // It's a short way  
 
 // It's a long way 
@@ -219,7 +218,7 @@ export default function MyFirstRender({state, cart}) {
     </>
 }
 
-export default withCart(connect((state)=>({state}))(MyFirstRender));
+export default withCart(connect((state)=>state)(MyFirstRender));
 ```
 
 ### Result

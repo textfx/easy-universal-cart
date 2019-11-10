@@ -1,44 +1,43 @@
-import React, {useState,useRef} from 'react';
-import {connect} from 'react-redux';
-import {withCart} from '../../../cart/cart-driver'
+import React, {useState,useRef, useCallback} from 'react';
+import {useSelector, } from 'react-redux';
+import {useCart} from '../../../cart/cart-driver'
 import CartOrder from './cart-order';
 import './cart-render.css';
 import Modal from './../modal/modal'
 import {surprise} from "../../simple/simple";
 import CartTable from './cart-table';
 
+const CartRender = ({ open, setOpen})=> {
 
-
-
-function CartRender({state, cart, open, setOpen}) {
-    const sum = cart.sumPrice("price"),
+    const cart = useCart(),
+          state = useSelector((state)=>state),
+          sum = cart.sumPrice("price"),
+          modalRef = useRef(null),
         [error, setError] = useState(false),
-        [tabel, setTable] = useState(true),
-        modalRef = useRef(null);
+        [tabel, setTable] = useState(true);
 
     // Give or Remove Gift
-    cart.toggle((sum>3000||state.length>(!cart.is("gift") ? 2 : 3)), "gift", ()=>surprise('gloves'));
+    cart.toggle((sum>3000 || state.length>(!cart.is("gift") ? 2 : 3)), "gift", ()=>surprise('gloves'));
 
-    const isError = ()=> !state.every(({id,currentSize})=> id==="gift" || (currentSize!=="-" && currentSize!==undefined));
-
-    const onNext = ()=>{
-        if (isError()) {
+    const onNext = useCallback(()=>{
+        if (!state.every(({id, currentSize})=> id==="gift" || (currentSize!=="-" && currentSize!==undefined))) {
             modalRef.current.scrollTop=0;
             setError(true);
-        } else
+        } else {
+            setError(false);
             setTable(false);
-    };
+        }
+    }, [state]);
 
-
-    const openCart  = ()=>{
+    const openCart = useCallback(()=>{
         cart.updateState();
         setOpen(true)
-    };
+    }, [cart,setOpen]);
 
-    const closeCart = ()=>{
+    const closeCart = useCallback(()=>{
         setTable(true);
-        setOpen(false)
-    };
+        setOpen(false);
+    }, [setTable,setOpen]);
 
 
     return(
@@ -62,8 +61,10 @@ function CartRender({state, cart, open, setOpen}) {
                  : null}
          </>
     );
-}
+};
+CartRender.whyDidYouRender = true;
 
-const mapStoreToProps = (state)=> ({state});
+export default CartRender;
 
-export default withCart(connect(mapStoreToProps)(CartRender));
+//const mapStoreToProps = (state)=> state;
+//export default withCart(connect(mapStoreToProps)(CartRender));

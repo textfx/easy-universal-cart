@@ -2,7 +2,7 @@ import React from 'react';
 import CartItem from "../cart-item";
 import './cart-table.css';
 
-export default function CartTable({state, error, sum, onNext}){
+const CartTable = React.memo(({state, error, sum, onNext}) =>{
 
     return (<div className="noselect modal-custom row">
         <h3>{error
@@ -11,14 +11,14 @@ export default function CartTable({state, error, sum, onNext}){
         }</h3>
         <table className="table font-16">
             <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col" style={{width:"20%"}}>Photo</th>
-                <th scope="col">Size</th>
-                <th scope="col" style={{width:"20%"}}>Count</th>
-                <th scope="col" style={{width:"20%"}}>Price</th>
-                <th scope="col"></th>
-            </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" style={{width:"20%"}}>Photo</th>
+                    <th scope="col">Size</th>
+                    <th scope="col" style={{width:"20%"}}>Count</th>
+                    <th scope="col" style={{width:"20%"}}>Price</th>
+                    <th scope="col"></th>
+                </tr>
             </thead>
             <tbody>
                 {state.map((props) => <CartItem key={props.id} {...props} />)}
@@ -27,4 +27,8 @@ export default function CartTable({state, error, sum, onNext}){
 
         {state.length ? <div className="center"><a href="#!" className="button-orange" onClick={onNext}  style={{"background": "#d70300", width:"100%"}}>Proceed to checkout</a></div> : null}
     </div>);
-}
+});
+
+CartTable.whyDidYouRender = true;
+
+export default CartTable

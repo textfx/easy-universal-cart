@@ -1,14 +1,17 @@
 import React from 'react';
-import {withCart} from '../../../../cart/cart-driver';
+import {useCart} from '../../../../cart/cart-driver';
 import "./cart-item.css";
 import {surprise} from "../../../simple/simple";
 
 
-function CartItem(props){
-    const {id, img, name, size, price, discount, count, currentSize, cart,  currency = "UAH"} = props;
+const CartItem = React.memo((props) => {
+    const {id, img, name, size, price, discount, count, currentSize, currency = "UAH"} = props;
+    const cart = useCart();
     const gift = id === "gift";
-    let select;
 
+    cart.setLocal(id, {disPrice: cart.discount(price, count, discount)});
+
+    let select;
     if (size)
         select = <select className="font-14" value={currentSize} required onChange={({target : t})=>cart.set({id, currentSize: t.options[t.selectedIndex].value})}>
             {size.map((val)=><option key={val} >{val}</option>)}
@@ -44,6 +47,8 @@ function CartItem(props){
                 : <td colSpan={3} className="gift"><span className="red">FREE GIFT</span> <p style={{paddingTop: "10px"}}>{name.toUpperCase()}</p></td>
             }
         </tr>);
-}
+}, (prev, next)=>(prev.uid === next.uid && prev.count === next.count && prev.currentSize===next.currentSize));
 
-export default withCart(CartItem);
+CartItem.whyDidYouRender = true;
+export default CartItem;
+//export default React.memo(CartItem, (prev, next)=>(prev.uid === next.uid && prev.count === next.count && prev.currentSize===next.currentSize));
